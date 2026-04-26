@@ -14,68 +14,45 @@
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding: 2rem 1rem;
+      padding: 1.5rem 1rem;
     }
 
     .card {
       background: #fff;
       border-radius: 16px;
-      padding: 2rem;
+      padding: 1.5rem;
       width: 100%;
-      max-width: 500px;
+      max-width: 480px;
       box-shadow: 0 2px 12px rgba(0,0,0,0.08);
     }
 
-    h1 { font-size: 18px; font-weight: 600; color: #1a1a1a; margin-bottom: 1.5rem; }
+    h1 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 1.25rem;
+      text-align: center;
+    }
 
     .section-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      color: #888;
+      color: #999;
       margin-bottom: 8px;
     }
 
-    label { font-size: 13px; color: #666; display: block; margin-bottom: 5px; }
-
-    .input-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    input[type="number"] {
-      flex: 1;
-      font-size: 16px;
-      padding: 9px 12px;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      outline: none;
-      color: #1a1a1a;
-      background: #fafafa;
-      -moz-appearance: textfield;
-    }
-
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
-
-    input[type="number"]:focus { border-color: #555; background: #fff; }
-
-    .unit { font-size: 13px; color: #888; min-width: 30px; }
-
-    /* Botones porcentaje */
     .pct-group {
       display: flex;
-      gap: 8px;
+      gap: 10px;
       margin-bottom: 1.25rem;
     }
 
     .pct-btn {
       flex: 1;
-      padding: 10px;
-      font-size: 15px;
+      padding: 12px;
+      font-size: 16px;
       font-weight: 600;
       border: 1.5px solid #ddd;
       border-radius: 10px;
@@ -91,8 +68,34 @@
       color: #fff;
     }
 
-    /* Reexpediciones */
-    .reexp-list { margin-bottom: 10px; }
+    .input-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    input[type="number"] {
+      flex: 1;
+      font-size: 16px;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      outline: none;
+      color: #1a1a1a;
+      background: #fafafa;
+      -moz-appearance: textfield;
+      width: 100%;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+
+    input[type="number"]:focus { border-color: #555; background: #fff; }
+
+    .unit { font-size: 13px; color: #999; min-width: 32px; text-align: right; }
+
+    .divider { border: none; border-top: 1px solid #eee; margin: 1.25rem 0; }
 
     .reexp-item {
       display: flex;
@@ -101,29 +104,28 @@
       margin-bottom: 8px;
     }
 
-    .reexp-item input { flex: 1; }
-
     .btn-remove {
-      width: 32px;
-      height: 32px;
-      border: 1px solid #ddd;
+      width: 34px;
+      height: 34px;
+      border: 1px solid #eee;
       border-radius: 8px;
       background: #fff;
-      color: #999;
-      font-size: 18px;
+      color: #bbb;
+      font-size: 20px;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
       line-height: 1;
+      padding-bottom: 2px;
     }
 
     .btn-remove:hover { border-color: #e55; color: #e55; }
 
     .btn-add {
       width: 100%;
-      padding: 9px;
+      padding: 10px;
       font-size: 13px;
       border: 1.5px dashed #ccc;
       border-radius: 10px;
@@ -133,31 +135,36 @@
       margin-bottom: 1.25rem;
     }
 
-    .btn-add:hover { border-color: #888; color: #444; background: #f0f0f0; }
-
-    .divider { border: none; border-top: 1px solid #eee; margin: 1.25rem 0; }
+    .btn-add:hover { border-color: #888; color: #444; }
 
     /* Resultados */
     .results { display: none; }
 
     .total-flete-block {
-      background: #f0f4ff;
-      border: 1px solid #c8d6f5;
+      background: #eef2ff;
+      border: 1px solid #c5d0f5;
       border-radius: 12px;
-      padding: 0.9rem 1.25rem;
+      padding: 0.9rem 1.1rem;
       margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
     }
 
-    .total-flete-label { font-size: 13px; color: #4a5a8a; font-weight: 500; }
-    .total-flete-value { font-size: 18px; font-weight: 700; color: #1a2a6e; }
+    .total-flete-label {
+      font-size: 12px;
+      color: #4a5a9a;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .total-flete-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1a2a7e;
+    }
 
     .result-block {
       background: #f8f8f8;
       border-radius: 12px;
-      padding: 1rem 1.25rem;
+      padding: 1rem 1.1rem;
       margin-bottom: 10px;
     }
 
@@ -167,14 +174,27 @@
       align-items: baseline;
       padding: 6px 0;
       border-bottom: 1px solid #ebebeb;
+      gap: 8px;
     }
 
     .step-row:last-child { border-bottom: none; }
-    .step-label { font-size: 13px; color: #666; }
-    .step-value { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+
+    .step-label {
+      font-size: 12px;
+      color: #777;
+      flex: 1;
+    }
+
+    .step-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1a1a1a;
+      text-align: right;
+      white-space: nowrap;
+    }
+
     .inc { color: #2a7a4f; }
 
-    /* Dos bloques destacados */
     .highlights {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -184,22 +204,17 @@
 
     .highlight-block {
       border-radius: 12px;
-      padding: 1rem;
+      padding: 1rem 0.75rem;
       text-align: center;
     }
 
-    .highlight-block.girar {
-      background: #1a1a2e;
-    }
-
-    .highlight-block.verificacion {
-      background: #0f4c2a;
-    }
+    .highlight-block.girar { background: #1a1a2e; }
+    .highlight-block.verificacion { background: #0f4c2a; }
 
     .hl-title {
       font-size: 10px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.07em;
       text-transform: uppercase;
       margin-bottom: 6px;
     }
@@ -208,10 +223,10 @@
     .verificacion .hl-title { color: #7abf96; }
 
     .hl-value {
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 700;
       color: #fff;
-      letter-spacing: -0.3px;
+      word-break: break-all;
     }
 
     .hl-sub { font-size: 10px; margin-top: 4px; }
@@ -222,27 +237,30 @@
       background: #fffbea;
       border: 1px solid #f0d060;
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 10px 12px;
     }
 
     .nota-block p { font-size: 12px; color: #7a6200; line-height: 1.5; }
     .nota-block strong { font-weight: 600; }
 
-    .hint { font-size: 13px; color: #aaa; text-align: center; padding: 1rem 0; }
+    .hint {
+      font-size: 13px;
+      color: #bbb;
+      text-align: center;
+      padding: 1rem 0;
+    }
   </style>
 </head>
 <body>
 <div class="card">
   <h1>Calculadora de anticipos</h1>
 
-  <!-- Porcentaje -->
   <div class="section-title">Porcentaje de anticipo</div>
   <div class="pct-group">
     <button class="pct-btn active" id="btn75" onclick="setPct(75)">75%</button>
     <button class="pct-btn" id="btn80" onclick="setPct(80)">80%</button>
   </div>
 
-  <!-- Flete base -->
   <div class="section-title">Valor del flete</div>
   <div class="input-row">
     <input type="number" id="fleteBase" placeholder="Ej: 2800000" step="any" oninput="calcular()" />
@@ -251,19 +269,17 @@
 
   <hr class="divider" />
 
-  <!-- Reexpediciones -->
   <div class="section-title">Reexpediciones (opcional)</div>
-  <div class="reexp-list" id="reexpList"></div>
+  <div id="reexpList"></div>
   <button class="btn-add" onclick="agregarReexp()">+ Agregar reexpedición</button>
 
   <hr class="divider" />
 
-  <!-- Resultados -->
   <div class="results" id="results">
 
-    <div class="total-flete-block" id="totalFleteBlock" style="display:none;">
-      <span class="total-flete-label">Valor flete total más reexpediciones</span>
-      <span class="total-flete-value" id="rTotalFlete">—</span>
+    <div id="totalFleteBlock" style="display:none;" class="total-flete-block">
+      <div class="total-flete-label">Valor flete total más reexpediciones</div>
+      <div class="total-flete-value" id="rTotalFlete">—</div>
     </div>
 
     <div class="result-block">
@@ -271,7 +287,7 @@
         <span class="step-label">Flete base</span>
         <span class="step-value" id="rFleteBase">—</span>
       </div>
-      <div class="step-row" id="rowPct">
+      <div class="step-row">
         <span class="step-label" id="labelPct">× 75% (anticipo bruto)</span>
         <span class="step-value" id="rAnticipoBruto">—</span>
       </div>
@@ -306,12 +322,12 @@
       <div class="highlight-block verificacion">
         <div class="hl-title">Verificación neto</div>
         <div class="hl-value" id="rVerificacion">—</div>
-        <div class="hl-sub">Después de descontar 1.4%</div>
+        <div class="hl-sub">Descontando 1.4%</div>
       </div>
     </div>
 
     <div class="nota-block">
-      <p><strong>Nota:</strong> El valor a girar incluye el 1.4% de banca para que el anticipo neto quede correcto. La verificación debe ser igual al anticipo bruto <span id="notaAnticipo"></span>.</p>
+      <p><strong>Nota:</strong> El valor a girar incluye el 1.4% de banca para que el anticipo neto quede correcto. La verificación debe ser ≈ <span id="notaAnticipo"></span>.</p>
     </div>
 
   </div>
@@ -333,14 +349,14 @@
   function agregarReexp() {
     reexpCount++;
     const id = 'reexp_' + reexpCount;
+    const itemId = 'item_' + id;
     const div = document.createElement('div');
     div.className = 'reexp-item';
-    div.id = 'item_' + id;
-    div.innerHTML = `
-      <input type="number" id="${id}" placeholder="Valor reexpedición ${reexpCount}" step="any" oninput="calcular()" />
-      <span class="unit">COP</span>
-      <button class="btn-remove" onclick="quitarReexp('item_${id}')" title="Eliminar">×</button>
-    `;
+    div.id = itemId;
+    div.innerHTML =
+      '<input type="number" id="' + id + '" placeholder="Valor reexpedición ' + reexpCount + '" step="any" oninput="calcular()" />' +
+      '<span class="unit">COP</span>' +
+      '<button class="btn-remove" onclick="quitarReexp(\'' + itemId + '\')" title="Eliminar">\xD7</button>';
     document.getElementById('reexpList').appendChild(div);
     calcular();
   }
@@ -354,7 +370,7 @@
   function getReexpediciones() {
     const inputs = document.querySelectorAll('#reexpList input[type="number"]');
     let total = 0;
-    inputs.forEach(inp => {
+    inputs.forEach(function(inp) {
       const v = parseFloat(inp.value);
       if (!isNaN(v) && v > 0) total += v;
     });
@@ -398,18 +414,15 @@
     const redondeado = siguienteMultiplo1000(conBancaRaw);
     const verificacion = redondearSi9(redondeado / 1.014);
 
-    // Bloque flete total
-    document.getElementById('totalFleteBlock').style.display = hayReexp ? 'flex' : 'none';
+    document.getElementById('totalFleteBlock').style.display = hayReexp ? 'block' : 'none';
     document.getElementById('rTotalFlete').textContent = '$ ' + fmtE(fleteTotal);
 
-    // Desglose
     document.getElementById('rFleteBase').textContent = '$ ' + fmt(fleteBase);
-    document.getElementById('labelPct').textContent = `× ${porcentaje}% (anticipo bruto)`;
+    document.getElementById('labelPct').textContent = '\xD7 ' + porcentaje + '% (anticipo bruto)';
     document.getElementById('rAnticipoBruto').textContent = '$ ' + fmt(anticipoBruto);
 
     document.getElementById('rowReexpSuma').style.display = hayReexp ? 'flex' : 'none';
     document.getElementById('rReexpSuma').textContent = '+ $ ' + fmt(reexp);
-
     document.getElementById('rowBaseCalculo').style.display = hayReexp ? 'flex' : 'none';
     document.getElementById('rBaseCalculo').textContent = '$ ' + fmt(baseCalculo);
 
@@ -417,10 +430,9 @@
     document.getElementById('rConBancaRaw').textContent = '$ ' + fmt(conBancaRaw);
     document.getElementById('rRedondeado').textContent = '$ ' + fmtE(redondeado);
 
-    // Destacados
     document.getElementById('rGirar').textContent = '$ ' + fmtE(redondeado);
     document.getElementById('rVerificacion').textContent = '$ ' + fmt(verificacion);
-    document.getElementById('notaAnticipo').textContent = '≈ $ ' + fmt(baseCalculo);
+    document.getElementById('notaAnticipo').textContent = '$ ' + fmt(baseCalculo);
 
     results.style.display = 'block';
     hint.style.display = 'none';
@@ -428,4 +440,3 @@
 </script>
 </body>
 </html>
-HTMLEOF
