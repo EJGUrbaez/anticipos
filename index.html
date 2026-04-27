@@ -9,7 +9,7 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f5f5f5;
+      background: #0d0d14;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -30,18 +30,18 @@
       padding: 10px 8px;
       font-size: 13px;
       font-weight: 600;
-      border: 1.5px solid #ddd;
+      border: 1.5px solid #2a2a3e;
       border-radius: 10px;
-      background: #fff;
-      color: #999;
+      background: #1a1a2e;
+      color: #555;
       cursor: pointer;
       transition: all 0.15s;
       text-align: center;
     }
 
     .tab-btn.active {
-      border-color: #1a1a2e;
-      background: #1a1a2e;
+      border-color: #4a6cf7;
+      background: #4a6cf7;
       color: #fff;
     }
 
@@ -49,17 +49,18 @@
     .tab-panel.active { display: block; }
 
     .card {
-      background: #fff;
+      background: #16162a;
+      border: 1px solid #2a2a42;
       border-radius: 16px;
       padding: 1.5rem;
       width: 100%;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
     }
 
     h1 {
       font-size: 18px;
       font-weight: 600;
-      color: #1a1a1a;
+      color: #e8e8f0;
       margin-bottom: 1.25rem;
       text-align: center;
     }
@@ -69,7 +70,7 @@
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.07em;
-      color: #999;
+      color: #555;
       margin-bottom: 8px;
     }
 
@@ -84,18 +85,18 @@
       padding: 10px 16px;
       font-size: 15px;
       font-weight: 600;
-      border: 1.5px solid #ddd;
+      border: 1.5px solid #2a2a42;
       border-radius: 10px;
-      background: #fff;
-      color: #666;
+      background: #1e1e34;
+      color: #888;
       cursor: pointer;
       transition: all 0.15s;
       white-space: nowrap;
     }
 
     .pct-btn.active {
-      border-color: #1a1a2e;
-      background: #1a1a2e;
+      border-color: #4a6cf7;
+      background: #4a6cf7;
       color: #fff;
     }
 
@@ -106,19 +107,19 @@
       margin-bottom: 1.25rem;
     }
 
-    .pct-custom-label { font-size: 13px; color: #888; white-space: nowrap; }
+    .pct-custom-label { font-size: 13px; color: #555; white-space: nowrap; }
 
     .pct-input-wrap {
       display: flex;
       align-items: center;
-      border: 1.5px solid #ddd;
+      border: 1.5px solid #2a2a42;
       border-radius: 10px;
-      background: #fafafa;
+      background: #1e1e34;
       overflow: hidden;
       width: 100px;
     }
 
-    .pct-input-wrap:focus-within { border-color: #555; background: #fff; }
+    .pct-input-wrap:focus-within { border-color: #4a6cf7; background: #20203a; }
 
     .pct-input-wrap input {
       flex: 1;
@@ -128,7 +129,7 @@
       border: none;
       outline: none;
       background: transparent;
-      color: #1a1a1a;
+      color: #e8e8f0;
       -moz-appearance: textfield;
       width: 50px;
     }
@@ -136,9 +137,8 @@
     .pct-input-wrap input::-webkit-inner-spin-button,
     .pct-input-wrap input::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-    .pct-symbol { font-size: 16px; font-weight: 600; color: #888; padding-right: 10px; }
+    .pct-symbol { font-size: 16px; font-weight: 600; color: #555; padding-right: 10px; }
 
-    /* ── Campo de flete con formato ── */
     .input-row {
       display: flex;
       gap: 8px;
@@ -150,22 +150,19 @@
       flex: 1;
       display: flex;
       align-items: center;
-      border: 1px solid #ddd;
+      border: 1px solid #2a2a42;
       border-radius: 10px;
-      background: #fafafa;
+      background: #1e1e34;
       overflow: hidden;
       transition: border-color 0.15s, background 0.15s;
     }
 
-    .flete-wrap:focus-within {
-      border-color: #555;
-      background: #fff;
-    }
+    .flete-wrap:focus-within { border-color: #4a6cf7; background: #20203a; }
 
     .flete-prefix {
       font-size: 14px;
       font-weight: 600;
-      color: #aaa;
+      color: #555;
       padding: 10px 0 10px 12px;
       user-select: none;
     }
@@ -177,14 +174,16 @@
       border: none;
       outline: none;
       background: transparent;
-      color: #1a1a1a;
+      color: #e8e8f0;
       width: 100%;
       font-family: inherit;
     }
 
-    .unit { font-size: 13px; color: #999; min-width: 32px; text-align: right; }
+    .flete-input::placeholder { color: #2e2e4a; }
 
-    .divider { border: none; border-top: 1px solid #eee; margin: 1.25rem 0; }
+    .unit { font-size: 13px; color: #444; min-width: 32px; text-align: right; }
+
+    .divider { border: none; border-top: 1px solid #222238; margin: 1.25rem 0; }
 
     .reexp-item {
       display: flex;
@@ -195,10 +194,10 @@
 
     .btn-remove {
       width: 34px; height: 34px;
-      border: 1px solid #eee;
+      border: 1px solid #2a2a42;
       border-radius: 8px;
-      background: #fff;
-      color: #bbb;
+      background: #1e1e34;
+      color: #555;
       font-size: 20px;
       cursor: pointer;
       display: flex;
@@ -215,31 +214,37 @@
       width: 100%;
       padding: 10px;
       font-size: 13px;
-      border: 1.5px dashed #ccc;
+      border: 1.5px dashed #2a2a42;
       border-radius: 10px;
-      background: #fafafa;
-      color: #888;
+      background: #1a1a2e;
+      color: #555;
       cursor: pointer;
       margin-bottom: 1.25rem;
     }
 
-    .btn-add:hover { border-color: #888; color: #444; }
+    .btn-add:hover { border-color: #4a6cf7; color: #aab; }
 
     .results { display: none; }
 
     .total-flete-block {
-      background: #eef2ff;
-      border: 1px solid #c5d0f5;
+      background: #1e2040;
+      border: 1px solid #2e3466;
       border-radius: 12px;
       padding: 0.9rem 1.1rem;
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
 
-    .total-flete-label { font-size: 12px; color: #4a5a9a; font-weight: 500; margin-bottom: 4px; }
-    .total-flete-value { font-size: 20px; font-weight: 700; color: #1a2a7e; }
+    .total-flete-left { flex: 1; }
+    .total-flete-label { font-size: 12px; color: #6070b0; font-weight: 500; margin-bottom: 4px; }
+    .total-flete-value { font-size: 20px; font-weight: 700; color: #a0b4ff; }
 
     .result-block {
-      background: #f8f8f8;
+      background: #1a1a2e;
+      border: 1px solid #222238;
       border-radius: 12px;
       padding: 1rem 1.1rem;
       margin-bottom: 10px;
@@ -250,14 +255,14 @@
       justify-content: space-between;
       align-items: baseline;
       padding: 6px 0;
-      border-bottom: 1px solid #ebebeb;
+      border-bottom: 1px solid #1e1e34;
       gap: 8px;
     }
 
     .step-row:last-child { border-bottom: none; }
-    .step-label { font-size: 12px; color: #777; flex: 1; }
-    .step-value { font-size: 14px; font-weight: 600; color: #1a1a1a; text-align: right; white-space: nowrap; }
-    .inc { color: #2a7a4f; }
+    .step-label { font-size: 12px; color: #484870; flex: 1; }
+    .step-value { font-size: 14px; font-weight: 600; color: #c8c8e0; text-align: right; white-space: nowrap; }
+    .inc { color: #4aad7a; }
 
     .highlights {
       display: grid;
@@ -272,8 +277,8 @@
       text-align: center;
     }
 
-    .highlight-block.girar { background: #1a1a2e; }
-    .highlight-block.verificacion { background: #0f4c2a; }
+    .highlight-block.girar { background: #1a1a3a; border: 1px solid #2e2e5a; }
+    .highlight-block.verificacion { background: #0d2a1a; border: 1px solid #1a4a30; }
 
     .hl-title {
       font-size: 10px;
@@ -283,57 +288,51 @@
       margin-bottom: 6px;
     }
 
-    .girar .hl-title { color: #a0a8c0; }
-    .verificacion .hl-title { color: #7abf96; }
+    .girar .hl-title { color: #6070b0; }
+    .verificacion .hl-title { color: #4a8a65; }
 
-    .hl-value { font-size: 18px; font-weight: 700; color: #fff; word-break: break-all; }
+    .hl-value { font-size: 18px; font-weight: 700; color: #e8e8f0; word-break: break-all; }
     .hl-sub { font-size: 10px; margin-top: 4px; }
-    .girar .hl-sub { color: #6b7490; }
-    .verificacion .hl-sub { color: #4a8a65; }
+    .girar .hl-sub { color: #3a4070; }
+    .verificacion .hl-sub { color: #2a5a45; }
+
+    /* ── Botón copiar ── */
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border: 1px solid #2a2a50;
+      border-radius: 7px;
+      background: #20203a;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 8px;
+    }
+
+    .copy-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
+    .copy-btn:hover { border-color: #4a6cf7; color: #a0b4ff; background: #22224a; }
+    .copy-btn.copied { border-color: #2a7a4f !important; color: #4aad7a !important; background: #0d2a1a !important; }
+
+    /* En el bloque total-flete no necesita margin-top */
+    .total-flete-block .copy-btn { margin-top: 0; }
 
     .nota-block {
-      background: #fffbea;
-      border: 1px solid #f0d060;
+      background: #1e1a0a;
+      border: 1px solid #3a3010;
       border-radius: 10px;
       padding: 10px 12px;
     }
 
-    .nota-block p { font-size: 12px; color: #7a6200; line-height: 1.5; }
-    .nota-block strong { font-weight: 600; }
+    .nota-block p { font-size: 12px; color: #a09050; line-height: 1.5; }
+    .nota-block strong { font-weight: 600; color: #c0b060; }
 
-    .hint { font-size: 13px; color: #bbb; text-align: center; padding: 1rem 0; }
-
-    /* ── TAB 2 ── */
-    .saldo-result { display: none; margin-top: 1rem; }
-
-    .saldo-field {
-      background: #f8f8f8;
-      border-radius: 12px;
-      padding: 1rem 1.1rem;
-      margin-bottom: 10px;
-    }
-
-    .saldo-field-label { font-size: 11px; color: #999; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
-    .saldo-field-value { font-size: 22px; font-weight: 700; color: #1a1a1a; }
-
-    .saldo-highlight {
-      background: #1a1a2e;
-      border-radius: 12px;
-      padding: 1.1rem;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .saldo-highlight .hl-title { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #a0a8c0; margin-bottom: 6px; }
-    .saldo-highlight .hl-value { font-size: 26px; font-weight: 700; color: #fff; }
-
-    .saldo-nota {
-      background: #fffbea;
-      border: 1px solid #f0d060;
-      border-radius: 10px;
-      padding: 10px 12px;
-    }
-    .saldo-nota p { font-size: 12px; color: #7a6200; line-height: 1.5; }
+    .hint { font-size: 13px; color: #333; text-align: center; padding: 1rem 0; }
 
     .easter-egg {
       display: none;
@@ -345,14 +344,6 @@
       0% { transform: scale(0.5); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
-    .easter-egg img {
-      width: 180px;
-      height: 180px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-    }
     .easter-egg p {
       font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
       font-size: 22px;
@@ -360,6 +351,30 @@
       color: #c0392b;
       text-shadow: 2px 2px 0px #f39c12;
     }
+
+    /* ── TAB 2 ── */
+    .saldo-result { display: none; margin-top: 1rem; }
+
+    .saldo-highlight {
+      background: #1a1a3a;
+      border: 1px solid #2e2e5a;
+      border-radius: 12px;
+      padding: 1.1rem;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .saldo-highlight .hl-title { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #6070b0; margin-bottom: 6px; }
+    .saldo-highlight .hl-value { font-size: 26px; font-weight: 700; color: #e8e8f0; }
+
+    .saldo-nota {
+      background: #1e1a0a;
+      border: 1px solid #3a3010;
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+    .saldo-nota p { font-size: 12px; color: #a09050; line-height: 1.5; }
+    .saldo-nota strong { color: #c0b060; }
   </style>
 </head>
 <body>
@@ -391,14 +406,7 @@
       <div class="input-row">
         <div class="flete-wrap">
           <span class="flete-prefix">$</span>
-          <input
-            class="flete-input"
-            id="fleteBase"
-            type="text"
-            inputmode="numeric"
-            placeholder="2.800.000"
-            oninput="onFleteInput(this, calcular)"
-          />
+          <input class="flete-input" id="fleteBase" type="text" inputmode="numeric" placeholder="2.800.000" oninput="onFleteInput(this, calcular)" />
         </div>
         <span class="unit">COP</span>
       </div>
@@ -412,9 +420,17 @@
       <hr class="divider" />
 
       <div class="results" id="results">
+
+        <!-- Total flete con botón copiar -->
         <div id="totalFleteBlock" style="display:none;" class="total-flete-block">
-          <div class="total-flete-label">Valor flete total más reexpediciones</div>
-          <div class="total-flete-value" id="rTotalFlete">—</div>
+          <div class="total-flete-left">
+            <div class="total-flete-label">Valor flete total más reexpediciones</div>
+            <div class="total-flete-value" id="rTotalFlete">—</div>
+          </div>
+          <button class="copy-btn" onclick="copiarValor('rTotalFlete', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar
+          </button>
         </div>
 
         <div class="result-block">
@@ -448,16 +464,25 @@
           </div>
         </div>
 
+        <!-- Highlights con botones copiar -->
         <div class="highlights">
           <div class="highlight-block girar">
             <div class="hl-title">Valor a girar</div>
             <div class="hl-value" id="rGirar">—</div>
             <div class="hl-sub">Incluye 1.4% banca</div>
+            <button class="copy-btn" onclick="copiarValor('rGirar', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copiar
+            </button>
           </div>
           <div class="highlight-block verificacion">
             <div class="hl-title">Verificación neto</div>
             <div class="hl-value" id="rVerificacion">—</div>
             <div class="hl-sub">Descontando 1.4%</div>
+            <button class="copy-btn" onclick="copiarValor('rVerificacion', this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Copiar
+            </button>
           </div>
         </div>
 
@@ -473,7 +498,7 @@
     </div>
   </div>
 
-  <!-- TAB 2: SALDO FINAL -->
+  <!-- TAB 2: NACHO -->
   <div class="tab-panel" id="tab-saldo">
     <div class="card">
       <h1>Nacho</h1>
@@ -482,14 +507,7 @@
       <div class="input-row">
         <div class="flete-wrap">
           <span class="flete-prefix">$</span>
-          <input
-            class="flete-input"
-            id="saldoFlete"
-            type="text"
-            inputmode="numeric"
-            placeholder="1.000.000"
-            oninput="onFleteInput(this, calcularSaldo)"
-          />
+          <input class="flete-input" id="saldoFlete" type="text" inputmode="numeric" placeholder="1.000.000" oninput="onFleteInput(this, calcularSaldo)" />
         </div>
         <span class="unit">COP</span>
       </div>
@@ -498,14 +516,7 @@
       <div class="input-row">
         <div class="flete-wrap">
           <span class="flete-prefix">$</span>
-          <input
-            class="flete-input"
-            id="saldoCancelar"
-            type="text"
-            inputmode="numeric"
-            placeholder="320.000"
-            oninput="onFleteInput(this, calcularSaldo)"
-          />
+          <input class="flete-input" id="saldoCancelar" type="text" inputmode="numeric" placeholder="320.000" oninput="onFleteInput(this, calcularSaldo)" />
         </div>
         <span class="unit">COP</span>
       </div>
@@ -523,9 +534,14 @@
           </div>
         </div>
 
+        <!-- Saldo highlight con botón copiar -->
         <div class="saldo-highlight">
           <div class="hl-title">Valor Cancelado a ingresar</div>
           <div class="hl-value" id="sValorCancelado">—</div>
+          <button class="copy-btn" onclick="copiarValor('sValorCancelado', this)">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar
+          </button>
         </div>
 
         <div class="saldo-nota">
@@ -540,51 +556,78 @@
 
 <script>
   // ══════════════════════════════════════════════════════════════
-  // Utilidad: formato de miles con punto (estilo colombiano)
+  // Formato de miles con punto (estilo colombiano)
   // ══════════════════════════════════════════════════════════════
-
-  /**
-   * Aplica formato de miles con "." mientras el usuario escribe.
-   * El campo es type="text" para poder mostrar los puntos.
-   * Guarda el valor numérico real en dataset.raw para los cálculos.
-   */
   function onFleteInput(input, callback) {
     const raw = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
-
-    // Easter egg del porcentaje personalizado
-    if (input.id === 'pctCustom') { callback(); return; }
-
-    // Guardar posición del cursor para restaurarla
     const selStart = input.selectionStart;
     const oldLen   = input.value.length;
-
-    // Formatear con puntos de miles
     const formatted = raw === '' ? '' : parseInt(raw, 10).toLocaleString('es-CO');
     input.value = formatted;
-
-    // Restaurar cursor ajustado por los puntos añadidos/removidos
     const newLen = input.value.length;
     const diff   = newLen - oldLen;
-    try {
-      input.setSelectionRange(selStart + diff, selStart + diff);
-    } catch(e) {}
-
-    // Almacenar valor numérico limpio
+    try { input.setSelectionRange(selStart + diff, selStart + diff); } catch(e) {}
     input.dataset.raw = raw === '' ? '' : raw;
-
     callback();
   }
 
-  /** Lee el valor numérico real de un campo formateado */
   function getNumericValue(inputId) {
     const input = document.getElementById(inputId);
-    // Soporte tanto para campos formateados (dataset.raw) como numéricos normales
     if (input.dataset && input.dataset.raw !== undefined && input.dataset.raw !== '') {
       return parseFloat(input.dataset.raw);
     }
-    // Fallback: limpiar puntos manualmente
     const clean = (input.value || '').replace(/\./g, '').replace(',', '.');
     return parseFloat(clean);
+  }
+
+  // ══════════════════════════════════════════════════════════════
+  // Copiar: extrae solo el entero sin $, sin puntos, sin decimales
+  // ══════════════════════════════════════════════════════════════
+  function copiarValor(elementId, btn) {
+    const texto = document.getElementById(elementId).textContent || '';
+    // Quitar $, signo +, puntos de miles, espacios y parte decimal (,xx)
+    const soloEntero = texto
+      .replace(/\$/g, '')
+      .replace(/\+/g, '')
+      .replace(/\./g, '')        // puntos de miles
+      .replace(/,\d+$/, '')      // decimales al final (ej: ,53)
+      .replace(/\s/g, '')
+      .trim();
+
+    if (!soloEntero || soloEntero === '—') return;
+
+    const ICONO_COPIAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    const ICONO_CHECK  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+
+    function mostrarCopiado() {
+      const original = btn.innerHTML;
+      btn.classList.add('copied');
+      btn.innerHTML = ICONO_CHECK + ' Copiado';
+      setTimeout(function() {
+        btn.classList.remove('copied');
+        btn.innerHTML = ICONO_COPIAR + ' Copiar';
+      }, 1800);
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(soloEntero).then(mostrarCopiado).catch(function() {
+        fallbackCopy(soloEntero, mostrarCopiado);
+      });
+    } else {
+      fallbackCopy(soloEntero, mostrarCopiado);
+    }
+  }
+
+  function fallbackCopy(text, callback) {
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); } catch(e) {}
+    document.body.removeChild(ta);
+    callback();
   }
 
   // ══════════════════════════════════════════════════════════════
@@ -698,7 +741,7 @@
     const redondeado     = siguienteMultiplo1000(conBancaRaw);
     const verificacion   = redondearSi9(redondeado / 1.014);
 
-    document.getElementById('totalFleteBlock').style.display = hayReexp ? 'block' : 'none';
+    document.getElementById('totalFleteBlock').style.display = hayReexp ? 'flex' : 'none';
     document.getElementById('rTotalFlete').textContent     = '$ ' + fmtE(fleteTotal);
     document.getElementById('rFleteBase').textContent      = '$ ' + fmt(fleteBase);
     document.getElementById('labelPct').textContent        = '\xD7 ' + porcentaje + '% (anticipo bruto)';
@@ -719,10 +762,8 @@
   }
 
   // ══════════════════════════════════════════════════════════════
-  // TAB 2: SALDO FINAL
+  // TAB 2: NACHO
   // ══════════════════════════════════════════════════════════════
-
-  // Valor por defecto del campo "cancelar"
   window.addEventListener('DOMContentLoaded', function() {
     const cancelInput = document.getElementById('saldoCancelar');
     cancelInput.value = '320.000';
