@@ -1,798 +1,440 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadoras de transporte</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #0d0d14;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1.5rem 1rem;
-    }
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f5; min-height: 100vh; display: flex; flex-direction: column; align-items: center; padding: 1.5rem 1rem; }
+.tabs { display: flex; gap: 8px; width: 100%; max-width: 520px; margin-bottom: 12px; }
+.tab-btn { flex: 1; padding: 10px 8px; font-size: 13px; font-weight: 600; border: 1.5px solid #d0d0d0; border-radius: 10px; background: #fff; color: #999; cursor: pointer; transition: all 0.15s; text-align: center; }
+.tab-btn.active { border-color: #4a6cf7; background: #4a6cf7; color: #fff; }
+.tab-panel { display: none; width: 100%; max-width: 520px; }
+.tab-panel.active { display: block; }
+.card { background: #12172e; border-radius: 16px; padding: 1.5rem; width: 100%; box-shadow: 0 4px 32px rgba(0,0,0,0.18); }
+h1 { font-size: 18px; font-weight: 600; color: #fff; margin-bottom: 1.25rem; text-align: center; }
+.section-title { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: #fff; margin-bottom: 8px; }
+.pct-group { display: flex; gap: 8px; margin-bottom: 8px; }
+.pct-btn { padding: 10px 16px; font-size: 15px; font-weight: 600; border: 1.5px solid #2a2a42; border-radius: 10px; background: #1e2240; color: #fff; cursor: pointer; transition: all 0.15s; }
+.pct-btn.active { border-color: #4a6cf7; background: #4a6cf7; color: #fff; }
+.pct-custom-row { display: flex; align-items: center; gap: 8px; margin-bottom: 1.25rem; }
+.pct-custom-label { font-size: 13px; color: #fff; white-space: nowrap; }
+.pct-input-wrap { display: flex; align-items: center; border: 1.5px solid #2a2a42; border-radius: 10px; background: #1e2240; width: 100px; }
+.pct-input-wrap:focus-within { border-color: #4a6cf7; }
+.pct-input-wrap input { flex: 1; font-size: 15px; font-weight: 600; padding: 10px 8px; border: none; outline: none; background: transparent; color: #fff; width: 50px; -moz-appearance: textfield; }
+.pct-input-wrap input::-webkit-inner-spin-button, .pct-input-wrap input::-webkit-outer-spin-button { -webkit-appearance: none; }
+.pct-symbol { font-size: 16px; font-weight: 600; color: #fff; padding-right: 10px; }
+.input-row { display: flex; gap: 8px; align-items: center; margin-bottom: 10px; }
+.flete-wrap { flex: 1; display: flex; align-items: center; border: 1px solid #2a2a42; border-radius: 10px; background: #1e2240; overflow: hidden; transition: border-color 0.15s; }
+.flete-wrap:focus-within { border-color: #4a6cf7; }
+.flete-prefix { font-size: 14px; font-weight: 600; color: #fff; padding: 10px 0 10px 12px; user-select: none; }
+.flete-input { flex: 1; font-size: 16px; padding: 10px 12px 10px 4px; border: none; outline: none; background: transparent; color: #fff; width: 100%; font-family: inherit; }
+.flete-input::placeholder { color: rgba(255,255,255,0.3); }
+.unit { font-size: 13px; color: #fff; min-width: 32px; text-align: right; }
+.divider { border: none; border-top: 1px solid #1e2240; margin: 1.25rem 0; }
 
-    .tabs {
-      display: flex;
-      gap: 8px;
-      width: 100%;
-      max-width: 480px;
-      margin-bottom: 12px;
-    }
+.reexp-item { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; }
+.ciudad-wrap { display: flex; align-items: center; border: 1px solid #2a2a42; border-radius: 10px; background: #1e2240; overflow: hidden; transition: all 0.2s; flex-shrink: 0; width: 0; max-width: 0; opacity: 0; }
+.ciudad-wrap.visible { width: 128px; max-width: 128px; opacity: 1; }
+.ciudad-wrap:focus-within { border-color: #4a6cf7; }
+.ciudad-input { font-size: 14px; padding: 10px 10px; border: none; outline: none; background: transparent; color: #fff; width: 100%; font-family: inherit; min-width: 0; }
+.ciudad-input::placeholder { color: rgba(255,255,255,0.3); }
 
-    .tab-btn {
-      flex: 1;
-      padding: 10px 8px;
-      font-size: 13px;
-      font-weight: 600;
-      border: 1.5px solid #2a2a3e;
-      border-radius: 10px;
-      background: #1a1a2e;
-      color: #555;
-      cursor: pointer;
-      transition: all 0.15s;
-      text-align: center;
-    }
+.btn-ciudad { width: 34px; height: 38px; border: 1px solid #2a2a42; border-radius: 8px; background: #1e2240; color: rgba(255,255,255,0.5); font-size: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.15s; }
+.btn-ciudad:hover { border-color: #4a6cf7; color: #fff; }
+.btn-ciudad.active { border-color: #4a6cf7; background: #4a6cf7; color: #fff; }
+.btn-ciudad svg { width: 14px; height: 14px; }
 
-    .tab-btn.active {
-      border-color: #4a6cf7;
-      background: #4a6cf7;
-      color: #fff;
-    }
+.btn-remove { width: 34px; height: 38px; border: 1px solid #2a2a42; border-radius: 8px; background: #1e2240; color: rgba(255,255,255,0.4); font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; padding-bottom: 2px; }
+.btn-remove:hover { border-color: #e55; color: #e55; }
+.btn-add { width: 100%; padding: 10px; font-size: 13px; border: 1.5px dashed #2a2a42; border-radius: 10px; background: transparent; color: rgba(255,255,255,0.4); cursor: pointer; margin-bottom: 8px; font-family: inherit; }
+.btn-add:hover { border-color: #4a6cf7; color: #fff; }
 
-    .tab-panel { display: none; width: 100%; max-width: 480px; }
-    .tab-panel.active { display: block; }
+.copy-list-btn { width: 100%; padding: 9px; font-size: 12px; font-weight: 600; border: 1.5px solid #2a2a42; border-radius: 10px; background: #1e2240; color: #fff; cursor: pointer; display: none; align-items: center; justify-content: center; gap: 6px; margin-bottom: 1.25rem; transition: all 0.15s; font-family: inherit; }
+.copy-list-btn:hover { border-color: #4a6cf7; color: #a0b4ff; }
+.copy-list-btn.copied { border-color: #2a7a4f !important; color: #4aad7a !important; background: #0d2a1a !important; }
+.copy-list-btn svg { width: 13px; height: 13px; flex-shrink: 0; }
 
-    .card {
-      background: #16162a;
-      border: 1px solid #2a2a42;
-      border-radius: 16px;
-      padding: 1.5rem;
-      width: 100%;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.5);
-    }
+.results { display: none; }
+.total-flete-block { background: #1e2240; border: 1px solid #2e3466; border-radius: 12px; padding: 0.9rem 1.1rem; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.total-flete-left { flex: 1; }
+.total-flete-label { font-size: 12px; color: rgba(255,255,255,0.6); font-weight: 500; margin-bottom: 4px; }
+.total-flete-value { font-size: 20px; font-weight: 700; color: #fff; }
+.result-block { background: #1a1f40; border: 1px solid #222a50; border-radius: 12px; padding: 1rem 1.1rem; margin-bottom: 10px; }
+.step-row { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; border-bottom: 1px solid #1e2240; gap: 8px; }
+.step-row:last-child { border-bottom: none; }
+.step-label { font-size: 12px; color: rgba(255,255,255,0.5); flex: 1; }
+.step-value { font-size: 14px; font-weight: 600; color: #fff; text-align: right; white-space: nowrap; }
+.inc { color: #4aad7a; }
+.highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+.highlight-block { border-radius: 12px; padding: 1rem 0.75rem; text-align: center; }
+.highlight-block.girar { background: #1a1f3a; border: 1px solid #2e3060; }
+.highlight-block.verificacion { background: #0d2a1a; border: 1px solid #1a4a30; }
+.hl-title { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 6px; }
+.girar .hl-title { color: rgba(255,255,255,0.5); }
+.verificacion .hl-title { color: #4a8a65; }
+.hl-value { font-size: 18px; font-weight: 700; color: #fff; word-break: break-all; }
+.hl-sub { font-size: 10px; margin-top: 4px; }
+.girar .hl-sub { color: rgba(255,255,255,0.25); }
+.verificacion .hl-sub { color: #2a5a45; }
+.copy-btn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; font-size: 11px; font-weight: 600; border: 1px solid #2a2a50; border-radius: 7px; background: #20204a; color: rgba(255,255,255,0.5); cursor: pointer; transition: all 0.15s; white-space: nowrap; flex-shrink: 0; margin-top: 8px; font-family: inherit; }
+.copy-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
+.copy-btn:hover { border-color: #4a6cf7; color: #fff; }
+.copy-btn.copied { border-color: #2a7a4f !important; color: #4aad7a !important; background: #0d2a1a !important; }
+.total-flete-block .copy-btn { margin-top: 0; }
+.nota-block { background: #1e1a0a; border: 1px solid #3a3010; border-radius: 10px; padding: 10px 12px; }
+.nota-block p { font-size: 12px; color: #a09050; line-height: 1.5; }
+.nota-block strong { font-weight: 600; color: #c0b060; }
+.hint { font-size: 13px; color: rgba(255,255,255,0.25); text-align: center; padding: 1rem 0; }
+.easter-egg { display: none; text-align: center; padding: 1.5rem 1rem; }
+.easter-egg p { font-family: 'Comic Sans MS', cursive; font-size: 22px; font-weight: 700; color: #c0392b; text-shadow: 2px 2px 0px #f39c12; }
+.saldo-result { display: none; margin-top: 1rem; }
+.saldo-highlight { background: #1a1f3a; border: 1px solid #2e3060; border-radius: 12px; padding: 1.1rem; text-align: center; margin-bottom: 10px; }
+.saldo-highlight .hl-title { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
+.saldo-highlight .hl-value { font-size: 26px; font-weight: 700; color: #fff; }
+.saldo-nota { background: #1e1a0a; border: 1px solid #3a3010; border-radius: 10px; padding: 10px 12px; }
+.saldo-nota p { font-size: 12px; color: #a09050; line-height: 1.5; }
+.saldo-nota strong { color: #c0b060; }
+</style>
 
-    h1 {
-      font-size: 18px;
-      font-weight: 600;
-      color: #e8e8f0;
-      margin-bottom: 1.25rem;
-      text-align: center;
-    }
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('anticipos', event)">Anticipos</button>
+  <button class="tab-btn" onclick="switchTab('saldo', event)">Nacho</button>
+</div>
 
-    .section-title {
-      font-size: 11px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: #555;
-      margin-bottom: 8px;
-    }
-
-    .pct-group {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 8px;
-      align-items: center;
-    }
-
-    .pct-btn {
-      padding: 10px 16px;
-      font-size: 15px;
-      font-weight: 600;
-      border: 1.5px solid #2a2a42;
-      border-radius: 10px;
-      background: #1e1e34;
-      color: #888;
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-
-    .pct-btn.active {
-      border-color: #4a6cf7;
-      background: #4a6cf7;
-      color: #fff;
-    }
-
-    .pct-custom-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 1.25rem;
-    }
-
-    .pct-custom-label { font-size: 13px; color: #555; white-space: nowrap; }
-
-    .pct-input-wrap {
-      display: flex;
-      align-items: center;
-      border: 1.5px solid #2a2a42;
-      border-radius: 10px;
-      background: #1e1e34;
-      overflow: hidden;
-      width: 100px;
-    }
-
-    .pct-input-wrap:focus-within { border-color: #4a6cf7; background: #20203a; }
-
-    .pct-input-wrap input {
-      flex: 1;
-      font-size: 15px;
-      font-weight: 600;
-      padding: 10px 8px;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: #e8e8f0;
-      -moz-appearance: textfield;
-      width: 50px;
-    }
-
-    .pct-input-wrap input::-webkit-inner-spin-button,
-    .pct-input-wrap input::-webkit-outer-spin-button { -webkit-appearance: none; }
-
-    .pct-symbol { font-size: 16px; font-weight: 600; color: #555; padding-right: 10px; }
-
-    .input-row {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .flete-wrap {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      border: 1px solid #2a2a42;
-      border-radius: 10px;
-      background: #1e1e34;
-      overflow: hidden;
-      transition: border-color 0.15s, background 0.15s;
-    }
-
-    .flete-wrap:focus-within { border-color: #4a6cf7; background: #20203a; }
-
-    .flete-prefix {
-      font-size: 14px;
-      font-weight: 600;
-      color: #555;
-      padding: 10px 0 10px 12px;
-      user-select: none;
-    }
-
-    .flete-input {
-      flex: 1;
-      font-size: 16px;
-      padding: 10px 12px 10px 4px;
-      border: none;
-      outline: none;
-      background: transparent;
-      color: #e8e8f0;
-      width: 100%;
-      font-family: inherit;
-    }
-
-    .flete-input::placeholder { color: #2e2e4a; }
-
-    .unit { font-size: 13px; color: #444; min-width: 32px; text-align: right; }
-
-    .divider { border: none; border-top: 1px solid #222238; margin: 1.25rem 0; }
-
-    .reexp-item {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-
-    .btn-remove {
-      width: 34px; height: 34px;
-      border: 1px solid #2a2a42;
-      border-radius: 8px;
-      background: #1e1e34;
-      color: #555;
-      font-size: 20px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      line-height: 1;
-      padding-bottom: 2px;
-    }
-
-    .btn-remove:hover { border-color: #e55; color: #e55; }
-
-    .btn-add {
-      width: 100%;
-      padding: 10px;
-      font-size: 13px;
-      border: 1.5px dashed #2a2a42;
-      border-radius: 10px;
-      background: #1a1a2e;
-      color: #555;
-      cursor: pointer;
-      margin-bottom: 1.25rem;
-    }
-
-    .btn-add:hover { border-color: #4a6cf7; color: #aab; }
-
-    .results { display: none; }
-
-    .total-flete-block {
-      background: #1e2040;
-      border: 1px solid #2e3466;
-      border-radius: 12px;
-      padding: 0.9rem 1.1rem;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .total-flete-left { flex: 1; }
-    .total-flete-label { font-size: 12px; color: #6070b0; font-weight: 500; margin-bottom: 4px; }
-    .total-flete-value { font-size: 20px; font-weight: 700; color: #a0b4ff; }
-
-    .result-block {
-      background: #1a1a2e;
-      border: 1px solid #222238;
-      border-radius: 12px;
-      padding: 1rem 1.1rem;
-      margin-bottom: 10px;
-    }
-
-    .step-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 6px 0;
-      border-bottom: 1px solid #1e1e34;
-      gap: 8px;
-    }
-
-    .step-row:last-child { border-bottom: none; }
-    .step-label { font-size: 12px; color: #484870; flex: 1; }
-    .step-value { font-size: 14px; font-weight: 600; color: #c8c8e0; text-align: right; white-space: nowrap; }
-    .inc { color: #4aad7a; }
-
-    .highlights {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-
-    .highlight-block {
-      border-radius: 12px;
-      padding: 1rem 0.75rem;
-      text-align: center;
-    }
-
-    .highlight-block.girar { background: #1a1a3a; border: 1px solid #2e2e5a; }
-    .highlight-block.verificacion { background: #0d2a1a; border: 1px solid #1a4a30; }
-
-    .hl-title {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .girar .hl-title { color: #6070b0; }
-    .verificacion .hl-title { color: #4a8a65; }
-
-    .hl-value { font-size: 18px; font-weight: 700; color: #e8e8f0; word-break: break-all; }
-    .hl-sub { font-size: 10px; margin-top: 4px; }
-    .girar .hl-sub { color: #3a4070; }
-    .verificacion .hl-sub { color: #2a5a45; }
-
-    /* ── Botón copiar ── */
-    .copy-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      padding: 5px 10px;
-      font-size: 11px;
-      font-weight: 600;
-      border: 1px solid #2a2a50;
-      border-radius: 7px;
-      background: #20203a;
-      color: #666;
-      cursor: pointer;
-      transition: all 0.15s;
-      white-space: nowrap;
-      flex-shrink: 0;
-      margin-top: 8px;
-    }
-
-    .copy-btn svg { width: 11px; height: 11px; flex-shrink: 0; }
-    .copy-btn:hover { border-color: #4a6cf7; color: #a0b4ff; background: #22224a; }
-    .copy-btn.copied { border-color: #2a7a4f !important; color: #4aad7a !important; background: #0d2a1a !important; }
-
-    /* En el bloque total-flete no necesita margin-top */
-    .total-flete-block .copy-btn { margin-top: 0; }
-
-    .nota-block {
-      background: #1e1a0a;
-      border: 1px solid #3a3010;
-      border-radius: 10px;
-      padding: 10px 12px;
-    }
-
-    .nota-block p { font-size: 12px; color: #a09050; line-height: 1.5; }
-    .nota-block strong { font-weight: 600; color: #c0b060; }
-
-    .hint { font-size: 13px; color: #333; text-align: center; padding: 1rem 0; }
-
-    .easter-egg {
-      display: none;
-      text-align: center;
-      padding: 1.5rem 1rem;
-      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    @keyframes popIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    .easter-egg p {
-      font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
-      font-size: 22px;
-      font-weight: 700;
-      color: #c0392b;
-      text-shadow: 2px 2px 0px #f39c12;
-    }
-
-    /* ── TAB 2 ── */
-    .saldo-result { display: none; margin-top: 1rem; }
-
-    .saldo-highlight {
-      background: #1a1a3a;
-      border: 1px solid #2e2e5a;
-      border-radius: 12px;
-      padding: 1.1rem;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .saldo-highlight .hl-title { font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: #6070b0; margin-bottom: 6px; }
-    .saldo-highlight .hl-value { font-size: 26px; font-weight: 700; color: #e8e8f0; }
-
-    .saldo-nota {
-      background: #1e1a0a;
-      border: 1px solid #3a3010;
-      border-radius: 10px;
-      padding: 10px 12px;
-    }
-    .saldo-nota p { font-size: 12px; color: #a09050; line-height: 1.5; }
-    .saldo-nota strong { color: #c0b060; }
-  </style>
-</head>
-<body>
-
-  <div class="tabs">
-    <button class="tab-btn active" onclick="switchTab('anticipos', event)">Anticipos</button>
-    <button class="tab-btn" onclick="switchTab('saldo', event)">Nacho</button>
-  </div>
-
-  <!-- TAB 1: ANTICIPOS -->
-  <div class="tab-panel active" id="tab-anticipos">
-    <div class="card">
-      <h1>Calculadora de anticipos</h1>
-
-      <div class="section-title">Porcentaje de anticipo</div>
-      <div class="pct-group">
-        <button class="pct-btn active" id="btn75" onclick="setPct(75)">75%</button>
-        <button class="pct-btn" id="btn80" onclick="setPct(80)">80%</button>
+<div class="tab-panel active" id="tab-anticipos">
+  <div class="card">
+    <h1>Calculadora de anticipos</h1>
+    <div class="section-title">Porcentaje de anticipo</div>
+    <div class="pct-group">
+      <button class="pct-btn active" id="btn75" onclick="setPct(75)">75%</button>
+      <button class="pct-btn" id="btn80" onclick="setPct(80)">80%</button>
+    </div>
+    <div class="pct-custom-row">
+      <span class="pct-custom-label">Personalizado:</span>
+      <div class="pct-input-wrap">
+        <input type="number" id="pctCustom" placeholder="Ej: 70" min="1" max="100" step="any" oninput="setPctCustom()" />
+        <span class="pct-symbol">%</span>
       </div>
-      <div class="pct-custom-row">
-        <span class="pct-custom-label">Personalizado:</span>
-        <div class="pct-input-wrap">
-          <input type="number" id="pctCustom" placeholder="Ej: 70" min="1" max="100" step="any" oninput="setPctCustom()" />
-          <span class="pct-symbol">%</span>
+    </div>
+
+    <div class="section-title">Valor del flete</div>
+    <div class="input-row">
+      <div class="flete-wrap">
+        <span class="flete-prefix">$</span>
+        <input class="flete-input" id="fleteBase" type="text" inputmode="numeric" placeholder="2.800.000" oninput="onFleteInput(this, calcular)" />
+      </div>
+      <span class="unit">COP</span>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="section-title">Reexpediciones (opcional)</div>
+    <div id="reexpList"></div>
+    <button class="btn-add" onclick="agregarReexp()">+ Agregar reexpedición</button>
+    <button class="copy-list-btn" id="copyListBtn" onclick="copiarLista()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      Copiar lista de reexpediciones
+    </button>
+
+    <hr class="divider" />
+
+    <div class="results" id="results">
+      <div id="totalFleteBlock" style="display:none;" class="total-flete-block">
+        <div class="total-flete-left">
+          <div class="total-flete-label">Valor flete total más reexpediciones</div>
+          <div class="total-flete-value" id="rTotalFlete">—</div>
         </div>
+        <button class="copy-btn" onclick="copiarValor('rTotalFlete', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar
+        </button>
       </div>
 
-      <div class="section-title">Valor del flete</div>
-      <div class="input-row">
-        <div class="flete-wrap">
-          <span class="flete-prefix">$</span>
-          <input class="flete-input" id="fleteBase" type="text" inputmode="numeric" placeholder="2.800.000" oninput="onFleteInput(this, calcular)" />
-        </div>
-        <span class="unit">COP</span>
+      <div class="result-block">
+        <div class="step-row"><span class="step-label">Flete base</span><span class="step-value" id="rFleteBase">—</span></div>
+        <div class="step-row"><span class="step-label" id="labelPct">× 75% (anticipo bruto)</span><span class="step-value" id="rAnticipoBruto">—</span></div>
+        <div class="step-row" id="rowReexpSuma" style="display:none;"><span class="step-label">+ Reexpediciones</span><span class="step-value inc" id="rReexpSuma">—</span></div>
+        <div class="step-row" id="rowBaseCalculo" style="display:none;"><span class="step-label">Base para cálculo bancario</span><span class="step-value" id="rBaseCalculo">—</span></div>
+        <div class="step-row"><span class="step-label">+ 1.4% (banca)</span><span class="step-value inc" id="rMasBanca">—</span></div>
+        <div class="step-row"><span class="step-label">Con banca (antes de redondear)</span><span class="step-value" id="rConBancaRaw">—</span></div>
+        <div class="step-row"><span class="step-label">Redondeado al siguiente múltiplo de 1.000</span><span class="step-value" id="rRedondeado">—</span></div>
       </div>
 
-      <hr class="divider" />
-
-      <div class="section-title">Reexpediciones (opcional)</div>
-      <div id="reexpList"></div>
-      <button class="btn-add" onclick="agregarReexp()">+ Agregar reexpedición</button>
-
-      <hr class="divider" />
-
-      <div class="results" id="results">
-
-        <!-- Total flete con botón copiar -->
-        <div id="totalFleteBlock" style="display:none;" class="total-flete-block">
-          <div class="total-flete-left">
-            <div class="total-flete-label">Valor flete total más reexpediciones</div>
-            <div class="total-flete-value" id="rTotalFlete">—</div>
-          </div>
-          <button class="copy-btn" onclick="copiarValor('rTotalFlete', this)">
+      <div class="highlights">
+        <div class="highlight-block girar">
+          <div class="hl-title">Valor a girar</div>
+          <div class="hl-value" id="rGirar">—</div>
+          <div class="hl-sub">Incluye 1.4% banca</div>
+          <button class="copy-btn" onclick="copiarValor('rGirar', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             Copiar
           </button>
         </div>
-
-        <div class="result-block">
-          <div class="step-row">
-            <span class="step-label">Flete base</span>
-            <span class="step-value" id="rFleteBase">—</span>
-          </div>
-          <div class="step-row">
-            <span class="step-label" id="labelPct">× 75% (anticipo bruto)</span>
-            <span class="step-value" id="rAnticipoBruto">—</span>
-          </div>
-          <div class="step-row" id="rowReexpSuma" style="display:none;">
-            <span class="step-label">+ Reexpediciones</span>
-            <span class="step-value inc" id="rReexpSuma">—</span>
-          </div>
-          <div class="step-row" id="rowBaseCalculo" style="display:none;">
-            <span class="step-label">Base para cálculo bancario</span>
-            <span class="step-value" id="rBaseCalculo">—</span>
-          </div>
-          <div class="step-row">
-            <span class="step-label">+ 1.4% (banca)</span>
-            <span class="step-value inc" id="rMasBanca">—</span>
-          </div>
-          <div class="step-row">
-            <span class="step-label">Con banca (antes de redondear)</span>
-            <span class="step-value" id="rConBancaRaw">—</span>
-          </div>
-          <div class="step-row">
-            <span class="step-label">Redondeado al siguiente múltiplo de 1.000</span>
-            <span class="step-value" id="rRedondeado">—</span>
-          </div>
-        </div>
-
-        <!-- Highlights con botones copiar -->
-        <div class="highlights">
-          <div class="highlight-block girar">
-            <div class="hl-title">Valor a girar</div>
-            <div class="hl-value" id="rGirar">—</div>
-            <div class="hl-sub">Incluye 1.4% banca</div>
-            <button class="copy-btn" onclick="copiarValor('rGirar', this)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Copiar
-            </button>
-          </div>
-          <div class="highlight-block verificacion">
-            <div class="hl-title">Verificación neto</div>
-            <div class="hl-value" id="rVerificacion">—</div>
-            <div class="hl-sub">Descontando 1.4%</div>
-            <button class="copy-btn" onclick="copiarValor('rVerificacion', this)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-              Copiar
-            </button>
-          </div>
-        </div>
-
-        <div class="nota-block">
-          <p><strong>Nota:</strong> El valor a girar incluye el 1.4% de banca para que el anticipo neto quede correcto. La verificación debe ser ≈ <span id="notaAnticipo"></span>.</p>
-        </div>
-      </div>
-
-      <p class="hint" id="hint">Ingresa el valor del flete para calcular</p>
-      <div class="easter-egg" id="easterEgg">
-        <p>🌈 el que lo lea es gay 🌈</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- TAB 2: NACHO -->
-  <div class="tab-panel" id="tab-saldo">
-    <div class="card">
-      <h1>Nacho</h1>
-
-      <div class="section-title">Valor del flete</div>
-      <div class="input-row">
-        <div class="flete-wrap">
-          <span class="flete-prefix">$</span>
-          <input class="flete-input" id="saldoFlete" type="text" inputmode="numeric" placeholder="1.000.000" oninput="onFleteInput(this, calcularSaldo)" />
-        </div>
-        <span class="unit">COP</span>
-      </div>
-
-      <div class="section-title" style="margin-top:4px;">Valor cancelar fijo</div>
-      <div class="input-row">
-        <div class="flete-wrap">
-          <span class="flete-prefix">$</span>
-          <input class="flete-input" id="saldoCancelar" type="text" inputmode="numeric" placeholder="320.000" oninput="onFleteInput(this, calcularSaldo)" />
-        </div>
-        <span class="unit">COP</span>
-      </div>
-
-      <div class="saldo-result" id="saldoResult">
-
-        <div class="result-block">
-          <div class="step-row">
-            <span class="step-label">Flete</span>
-            <span class="step-value" id="sFlete">—</span>
-          </div>
-          <div class="step-row">
-            <span class="step-label">Valor Cancelar fijo</span>
-            <span class="step-value" id="sValorCancelar">—</span>
-          </div>
-        </div>
-
-        <!-- Saldo highlight con botón copiar -->
-        <div class="saldo-highlight">
-          <div class="hl-title">Valor Cancelado a ingresar</div>
-          <div class="hl-value" id="sValorCancelado">—</div>
-          <button class="copy-btn" onclick="copiarValor('sValorCancelado', this)">
+        <div class="highlight-block verificacion">
+          <div class="hl-title">Verificación neto</div>
+          <div class="hl-value" id="rVerificacion">—</div>
+          <div class="hl-sub">Descontando 1.4%</div>
+          <button class="copy-btn" onclick="copiarValor('rVerificacion', this)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
             Copiar
           </button>
         </div>
-
-        <div class="saldo-nota">
-          <p><strong>Instrucción:</strong> Ingresa <strong id="sInstruccion">—</strong> en el campo "Valor Cancelado" del sistema. El campo "Valor Cancelar" quedará en <strong id="sInstruccion2">—</strong>.</p>
-        </div>
-
       </div>
 
-      <p class="hint" id="saldoHint">Ingresa el valor del flete para calcular</p>
+      <div class="nota-block">
+        <p><strong>Nota:</strong> El valor a girar incluye el 1.4% de banca para que el anticipo neto quede correcto. La verificación debe ser ≈ <span id="notaAnticipo"></span>.</p>
+      </div>
     </div>
+
+    <p class="hint" id="hint">Ingresa el valor del flete para calcular</p>
+    <div class="easter-egg" id="easterEgg"><p>🌈 el que lo lea es gay 🌈</p></div>
   </div>
+</div>
+
+<div class="tab-panel" id="tab-saldo">
+  <div class="card">
+    <h1>Nacho</h1>
+    <div class="section-title">Valor del flete</div>
+    <div class="input-row">
+      <div class="flete-wrap">
+        <span class="flete-prefix">$</span>
+        <input class="flete-input" id="saldoFlete" type="text" inputmode="numeric" placeholder="1.000.000" oninput="onFleteInput(this, calcularSaldo)" />
+      </div>
+      <span class="unit">COP</span>
+    </div>
+    <div class="section-title" style="margin-top:4px;">Valor cancelar fijo</div>
+    <div class="input-row">
+      <div class="flete-wrap">
+        <span class="flete-prefix">$</span>
+        <input class="flete-input" id="saldoCancelar" type="text" inputmode="numeric" placeholder="320.000" oninput="onFleteInput(this, calcularSaldo)" />
+      </div>
+      <span class="unit">COP</span>
+    </div>
+
+    <div class="saldo-result" id="saldoResult">
+      <div class="result-block">
+        <div class="step-row"><span class="step-label">Flete</span><span class="step-value" id="sFlete">—</span></div>
+        <div class="step-row"><span class="step-label">Valor Cancelar fijo</span><span class="step-value" id="sValorCancelar">—</span></div>
+      </div>
+      <div class="saldo-highlight">
+        <div class="hl-title">Valor Cancelado a ingresar</div>
+        <div class="hl-value" id="sValorCancelado">—</div>
+        <button class="copy-btn" onclick="copiarValor('sValorCancelado', this)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copiar
+        </button>
+      </div>
+      <div class="saldo-nota">
+        <p><strong>Instrucción:</strong> Ingresa <strong id="sInstruccion">—</strong> en el campo "Valor Cancelado" del sistema. El campo "Valor Cancelar" quedará en <strong id="sInstruccion2">—</strong>.</p>
+      </div>
+    </div>
+    <p class="hint" id="saldoHint">Ingresa el valor del flete para calcular</p>
+  </div>
+</div>
 
 <script>
-  // ══════════════════════════════════════════════════════════════
-  // Formato de miles con punto (estilo colombiano)
-  // ══════════════════════════════════════════════════════════════
-  function onFleteInput(input, callback) {
-    const raw = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
-    const selStart = input.selectionStart;
-    const oldLen   = input.value.length;
-    const formatted = raw === '' ? '' : parseInt(raw, 10).toLocaleString('es-CO');
-    input.value = formatted;
-    const newLen = input.value.length;
-    const diff   = newLen - oldLen;
-    try { input.setSelectionRange(selStart + diff, selStart + diff); } catch(e) {}
-    input.dataset.raw = raw === '' ? '' : raw;
-    callback();
-  }
+function onFleteInput(input, callback) {
+  const raw = input.value.replace(/\./g, '').replace(/[^0-9]/g, '');
+  const selStart = input.selectionStart;
+  const oldLen = input.value.length;
+  const formatted = raw === '' ? '' : parseInt(raw, 10).toLocaleString('es-CO');
+  input.value = formatted;
+  const diff = input.value.length - oldLen;
+  try { input.setSelectionRange(selStart + diff, selStart + diff); } catch(e) {}
+  input.dataset.raw = raw;
+  callback();
+}
 
-  function getNumericValue(inputId) {
-    const input = document.getElementById(inputId);
-    if (input.dataset && input.dataset.raw !== undefined && input.dataset.raw !== '') {
-      return parseFloat(input.dataset.raw);
+function getNumericValue(inputId) {
+  const input = document.getElementById(inputId);
+  if (input.dataset && input.dataset.raw !== undefined && input.dataset.raw !== '') return parseFloat(input.dataset.raw);
+  const clean = (input.value || '').replace(/\./g, '').replace(',', '.');
+  return parseFloat(clean);
+}
+
+function copiarValor(elementId, btn) {
+  const texto = document.getElementById(elementId).textContent || '';
+  const soloEntero = texto.replace(/\$/g, '').replace(/\+/g, '').replace(/\./g, '').replace(/,\d+$/, '').replace(/\s/g, '').trim();
+  if (!soloEntero || soloEntero === '—') return;
+  flashCopied(btn, soloEntero);
+}
+
+function copiarLista() {
+  const items = document.querySelectorAll('#reexpList .reexp-item');
+  const lineas = [];
+  items.forEach(function(item) {
+    const ciudadWrap = item.querySelector('.ciudad-wrap');
+    const ciudadInput = item.querySelector('.ciudad-input');
+    const fleteInput = item.querySelector('.flete-input');
+    const tieneCiudad = ciudadWrap && ciudadWrap.classList.contains('visible');
+    const ciudad = tieneCiudad && ciudadInput ? ciudadInput.value.trim() : '';
+    const rawVal = fleteInput && fleteInput.dataset.raw ? parseFloat(fleteInput.dataset.raw) : NaN;
+    if (!isNaN(rawVal) && rawVal > 0) {
+      const valorFmt = '$' + parseInt(rawVal).toLocaleString('es-CO');
+      lineas.push(ciudad ? ciudad + ' ' + valorFmt : valorFmt);
     }
-    const clean = (input.value || '').replace(/\./g, '').replace(',', '.');
-    return parseFloat(clean);
-  }
-
-  // ══════════════════════════════════════════════════════════════
-  // Copiar: extrae solo el entero sin $, sin puntos, sin decimales
-  // ══════════════════════════════════════════════════════════════
-  function copiarValor(elementId, btn) {
-    const texto = document.getElementById(elementId).textContent || '';
-    // Quitar $, signo +, puntos de miles, espacios y parte decimal (,xx)
-    const soloEntero = texto
-      .replace(/\$/g, '')
-      .replace(/\+/g, '')
-      .replace(/\./g, '')        // puntos de miles
-      .replace(/,\d+$/, '')      // decimales al final (ej: ,53)
-      .replace(/\s/g, '')
-      .trim();
-
-    if (!soloEntero || soloEntero === '—') return;
-
-    const ICONO_COPIAR = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
-    const ICONO_CHECK  = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
-
-    function mostrarCopiado() {
-      const original = btn.innerHTML;
-      btn.classList.add('copied');
-      btn.innerHTML = ICONO_CHECK + ' Copiado';
-      setTimeout(function() {
-        btn.classList.remove('copied');
-        btn.innerHTML = ICONO_COPIAR + ' Copiar';
-      }, 1800);
-    }
-
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(soloEntero).then(mostrarCopiado).catch(function() {
-        fallbackCopy(soloEntero, mostrarCopiado);
-      });
-    } else {
-      fallbackCopy(soloEntero, mostrarCopiado);
-    }
-  }
-
-  function fallbackCopy(text, callback) {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    try { document.execCommand('copy'); } catch(e) {}
-    document.body.removeChild(ta);
-    callback();
-  }
-
-  // ══════════════════════════════════════════════════════════════
-  // TABS
-  // ══════════════════════════════════════════════════════════════
-  function switchTab(name, event) {
-    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('tab-' + name).classList.add('active');
-    event.target.classList.add('active');
-  }
-
-  // ══════════════════════════════════════════════════════════════
-  // TAB 1: ANTICIPOS
-  // ══════════════════════════════════════════════════════════════
-  let porcentaje = 75;
-  let reexpCount = 0;
-
-  function setPct(p) {
-    porcentaje = p;
-    document.getElementById('btn75').classList.toggle('active', p === 75);
-    document.getElementById('btn80').classList.toggle('active', p === 80);
-    document.getElementById('pctCustom').value = '';
-    calcular();
-  }
-
-  function setPctCustom() {
-    const raw = document.getElementById('pctCustom').value;
-    const egg = document.getElementById('easterEgg');
-    if (raw === '00000') {
-      egg.style.display = 'block';
-      document.getElementById('pctCustom').blur();
-      setTimeout(() => egg.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
-      return;
-    } else {
-      egg.style.display = 'none';
-    }
-    const val = parseFloat(raw);
-    if (!isNaN(val) && val > 0 && val <= 100) {
-      porcentaje = val;
-      document.getElementById('btn75').classList.remove('active');
-      document.getElementById('btn80').classList.remove('active');
-      calcular();
-    }
-  }
-
-  function agregarReexp() {
-    reexpCount++;
-    const id     = 'reexp_' + reexpCount;
-    const itemId = 'item_' + id;
-    const div = document.createElement('div');
-    div.className = 'reexp-item';
-    div.id = itemId;
-    div.innerHTML =
-      '<div class="flete-wrap" style="flex:1">' +
-        '<span class="flete-prefix">$</span>' +
-        '<input class="flete-input" id="' + id + '" type="text" inputmode="numeric" placeholder="Reexpedición ' + reexpCount + '" oninput="onFleteInput(this, calcular)" />' +
-      '</div>' +
-      '<span class="unit">COP</span>' +
-      '<button class="btn-remove" onclick="quitarReexp(\'' + itemId + '\')" title="Eliminar">\xD7</button>';
-    document.getElementById('reexpList').appendChild(div);
-    calcular();
-  }
-
-  function quitarReexp(itemId) {
-    const el = document.getElementById(itemId);
-    if (el) el.remove();
-    calcular();
-  }
-
-  function getReexpediciones() {
-    const inputs = document.querySelectorAll('#reexpList .flete-input');
-    let total = 0;
-    inputs.forEach(function(inp) {
-      const raw = inp.dataset && inp.dataset.raw !== '' ? parseFloat(inp.dataset.raw) : NaN;
-      if (!isNaN(raw) && raw > 0) total += raw;
-    });
-    return total;
-  }
-
-  function siguienteMultiplo1000(n) { return Math.ceil(n / 1000) * 1000; }
-  function redondearSi9(n) {
-    const primerDecimal = Math.floor((n * 10) % 10);
-    return primerDecimal === 9 ? Math.ceil(n) : n;
-  }
-
-  function fmt(n) {
-    return new Intl.NumberFormat('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n);
-  }
-  function fmtE(n) {
-    return new Intl.NumberFormat('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
-  }
-
-  function calcular() {
-    const fleteBase = getNumericValue('fleteBase');
-    const reexp     = getReexpediciones();
-    const results   = document.getElementById('results');
-    const hint      = document.getElementById('hint');
-
-    if (isNaN(fleteBase) || fleteBase === 0) {
-      results.style.display = 'none';
-      hint.style.display = 'block';
-      return;
-    }
-
-    const hayReexp       = reexp > 0;
-    const fleteTotal     = fleteBase + reexp;
-    const anticipoBruto  = fleteBase * (porcentaje / 100);
-    const baseCalculo    = anticipoBruto + reexp;
-    const conBancaRaw    = baseCalculo * 1.014;
-    const redondeado     = siguienteMultiplo1000(conBancaRaw);
-    const verificacion   = redondearSi9(redondeado / 1.014);
-
-    document.getElementById('totalFleteBlock').style.display = hayReexp ? 'flex' : 'none';
-    document.getElementById('rTotalFlete').textContent     = '$ ' + fmtE(fleteTotal);
-    document.getElementById('rFleteBase').textContent      = '$ ' + fmt(fleteBase);
-    document.getElementById('labelPct').textContent        = '\xD7 ' + porcentaje + '% (anticipo bruto)';
-    document.getElementById('rAnticipoBruto').textContent  = '$ ' + fmt(anticipoBruto);
-    document.getElementById('rowReexpSuma').style.display  = hayReexp ? 'flex' : 'none';
-    document.getElementById('rReexpSuma').textContent      = '+ $ ' + fmt(reexp);
-    document.getElementById('rowBaseCalculo').style.display = hayReexp ? 'flex' : 'none';
-    document.getElementById('rBaseCalculo').textContent    = '$ ' + fmt(baseCalculo);
-    document.getElementById('rMasBanca').textContent       = '+ $ ' + fmt(baseCalculo * 0.014);
-    document.getElementById('rConBancaRaw').textContent    = '$ ' + fmt(conBancaRaw);
-    document.getElementById('rRedondeado').textContent     = '$ ' + fmtE(redondeado);
-    document.getElementById('rGirar').textContent          = '$ ' + fmtE(redondeado);
-    document.getElementById('rVerificacion').textContent   = '$ ' + fmt(verificacion);
-    document.getElementById('notaAnticipo').textContent    = '$ ' + fmt(baseCalculo);
-
-    results.style.display = 'block';
-    hint.style.display    = 'none';
-  }
-
-  // ══════════════════════════════════════════════════════════════
-  // TAB 2: NACHO
-  // ══════════════════════════════════════════════════════════════
-  window.addEventListener('DOMContentLoaded', function() {
-    const cancelInput = document.getElementById('saldoCancelar');
-    cancelInput.value = '320.000';
-    cancelInput.dataset.raw = '320000';
   });
+  if (lineas.length === 0) return;
+  flashCopied(document.getElementById('copyListBtn'), lineas.join('\n'));
+}
 
-  function calcularSaldo() {
-    const flete    = getNumericValue('saldoFlete');
-    const cancelar = getNumericValue('saldoCancelar') || 320000;
-    const resultDiv = document.getElementById('saldoResult');
-    const hintDiv   = document.getElementById('saldoHint');
-
-    if (isNaN(flete) || flete === 0) {
-      resultDiv.style.display = 'none';
-      hintDiv.style.display   = 'block';
-      return;
-    }
-
-    const valorCancelado = (flete * 0.98) - cancelar;
-
-    document.getElementById('sFlete').textContent         = '$ ' + fmtE(flete);
-    document.getElementById('sValorCancelar').textContent  = '$ ' + fmtE(cancelar);
-    document.getElementById('sValorCancelado').textContent = '$ ' + fmtE(valorCancelado);
-    document.getElementById('sInstruccion').textContent   = '$ ' + fmtE(valorCancelado);
-    document.getElementById('sInstruccion2').textContent  = '$ ' + fmtE(cancelar);
-
-    resultDiv.style.display = 'block';
-    hintDiv.style.display   = 'none';
+function flashCopied(btn, texto) {
+  const IC = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
+  const orig = btn.innerHTML;
+  function mostrar() {
+    btn.classList.add('copied');
+    btn.innerHTML = OK + ' Copiado';
+    setTimeout(function() { btn.classList.remove('copied'); btn.innerHTML = orig; }, 1800);
   }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(texto).then(mostrar).catch(function() { fallbackCopy(texto, mostrar); });
+  } else { fallbackCopy(texto, mostrar); }
+}
+
+function fallbackCopy(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta); cb();
+}
+
+function switchTab(name, event) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+let porcentaje = 75, reexpCount = 0;
+
+function setPct(p) {
+  porcentaje = p;
+  document.getElementById('btn75').classList.toggle('active', p === 75);
+  document.getElementById('btn80').classList.toggle('active', p === 80);
+  document.getElementById('pctCustom').value = '';
+  calcular();
+}
+
+function setPctCustom() {
+  const raw = document.getElementById('pctCustom').value;
+  const egg = document.getElementById('easterEgg');
+  if (raw === '00000') { egg.style.display = 'block'; document.getElementById('pctCustom').blur(); return; }
+  else { egg.style.display = 'none'; }
+  const val = parseFloat(raw);
+  if (!isNaN(val) && val > 0 && val <= 100) {
+    porcentaje = val;
+    document.getElementById('btn75').classList.remove('active');
+    document.getElementById('btn80').classList.remove('active');
+    calcular();
+  }
+}
+
+function actualizarBotonesLista() {
+  const items = document.querySelectorAll('#reexpList .reexp-item');
+  const btn = document.getElementById('copyListBtn');
+  btn.style.display = items.length > 0 ? 'flex' : 'none';
+}
+
+function toggleCiudad(btn) {
+  const item = btn.closest('.reexp-item');
+  const wrap = item.querySelector('.ciudad-wrap');
+  const activo = wrap.classList.toggle('visible');
+  btn.classList.toggle('active', activo);
+  if (activo) { item.querySelector('.ciudad-input').focus(); }
+}
+
+function agregarReexp() {
+  reexpCount++;
+  const id = 'reexp_' + reexpCount;
+  const itemId = 'item_' + id;
+  const div = document.createElement('div');
+  div.className = 'reexp-item';
+  div.id = itemId;
+  div.innerHTML =
+    '<button class="btn-ciudad" onclick="toggleCiudad(this)" title="Agregar ciudad">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>' +
+    '</button>' +
+    '<div class="ciudad-wrap"><input class="ciudad-input" type="text" placeholder="Ciudad" /></div>' +
+    '<div class="flete-wrap" style="flex:1">' +
+      '<span class="flete-prefix">$</span>' +
+      '<input class="flete-input" id="' + id + '" type="text" inputmode="numeric" placeholder="0" oninput="onFleteInput(this, calcular)" />' +
+    '</div>' +
+    '<span class="unit">COP</span>' +
+    '<button class="btn-remove" onclick="quitarReexp(\'' + itemId + '\')" title="Eliminar">\xD7</button>';
+  document.getElementById('reexpList').appendChild(div);
+  actualizarBotonesLista();
+  calcular();
+}
+
+function quitarReexp(itemId) {
+  const el = document.getElementById(itemId);
+  if (el) el.remove();
+  actualizarBotonesLista();
+  calcular();
+}
+
+function getReexpediciones() {
+  const inputs = document.querySelectorAll('#reexpList .flete-input');
+  let total = 0;
+  inputs.forEach(function(inp) {
+    const raw = inp.dataset && inp.dataset.raw !== '' ? parseFloat(inp.dataset.raw) : NaN;
+    if (!isNaN(raw) && raw > 0) total += raw;
+  });
+  return total;
+}
+
+function siguienteMultiplo1000(n) { return Math.ceil(n / 1000) * 1000; }
+function redondearSi9(n) { return Math.floor((n * 10) % 10) === 9 ? Math.ceil(n) : n; }
+function fmt(n) { return new Intl.NumberFormat('es-CO', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(n); }
+function fmtE(n) { return new Intl.NumberFormat('es-CO', { minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n); }
+
+function calcular() {
+  const fleteBase = getNumericValue('fleteBase');
+  const reexp = getReexpediciones();
+  const results = document.getElementById('results');
+  const hint = document.getElementById('hint');
+  if (isNaN(fleteBase) || fleteBase === 0) { results.style.display = 'none'; hint.style.display = 'block'; return; }
+  const hayReexp = reexp > 0;
+  const fleteTotal = fleteBase + reexp;
+  const anticipoBruto = fleteBase * (porcentaje / 100);
+  const baseCalculo = anticipoBruto + reexp;
+  const conBancaRaw = baseCalculo * 1.014;
+  const redondeado = siguienteMultiplo1000(conBancaRaw);
+  const verificacion = redondearSi9(redondeado / 1.014);
+  document.getElementById('totalFleteBlock').style.display = hayReexp ? 'flex' : 'none';
+  document.getElementById('rTotalFlete').textContent = '$ ' + fmtE(fleteTotal);
+  document.getElementById('rFleteBase').textContent = '$ ' + fmt(fleteBase);
+  document.getElementById('labelPct').textContent = '\xD7 ' + porcentaje + '% (anticipo bruto)';
+  document.getElementById('rAnticipoBruto').textContent = '$ ' + fmt(anticipoBruto);
+  document.getElementById('rowReexpSuma').style.display = hayReexp ? 'flex' : 'none';
+  document.getElementById('rReexpSuma').textContent = '+ $ ' + fmt(reexp);
+  document.getElementById('rowBaseCalculo').style.display = hayReexp ? 'flex' : 'none';
+  document.getElementById('rBaseCalculo').textContent = '$ ' + fmt(baseCalculo);
+  document.getElementById('rMasBanca').textContent = '+ $ ' + fmt(baseCalculo * 0.014);
+  document.getElementById('rConBancaRaw').textContent = '$ ' + fmt(conBancaRaw);
+  document.getElementById('rRedondeado').textContent = '$ ' + fmtE(redondeado);
+  document.getElementById('rGirar').textContent = '$ ' + fmtE(redondeado);
+  document.getElementById('rVerificacion').textContent = '$ ' + fmt(verificacion);
+  document.getElementById('notaAnticipo').textContent = '$ ' + fmt(baseCalculo);
+  results.style.display = 'block'; hint.style.display = 'none';
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  const cancelInput = document.getElementById('saldoCancelar');
+  cancelInput.value = '320.000'; cancelInput.dataset.raw = '320000';
+});
+
+function calcularSaldo() {
+  const flete = getNumericValue('saldoFlete');
+  const cancelar = getNumericValue('saldoCancelar') || 320000;
+  const resultDiv = document.getElementById('saldoResult');
+  const hintDiv = document.getElementById('saldoHint');
+  if (isNaN(flete) || flete === 0) { resultDiv.style.display = 'none'; hintDiv.style.display = 'block'; return; }
+  const valorCancelado = (flete * 0.98) - cancelar;
+  document.getElementById('sFlete').textContent = '$ ' + fmtE(flete);
+  document.getElementById('sValorCancelar').textContent = '$ ' + fmtE(cancelar);
+  document.getElementById('sValorCancelado').textContent = '$ ' + fmtE(valorCancelado);
+  document.getElementById('sInstruccion').textContent = '$ ' + fmtE(valorCancelado);
+  document.getElementById('sInstruccion2').textContent = '$ ' + fmtE(cancelar);
+  resultDiv.style.display = 'block'; hintDiv.style.display = 'none';
+}
 </script>
-</body>
-</html>
