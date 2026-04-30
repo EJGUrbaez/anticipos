@@ -691,7 +691,7 @@ function calcularSaldo() {
   const resultDiv = document.getElementById('saldoResult');
   const hintDiv = document.getElementById('saldoHint');
   if (isNaN(flete) || flete === 0) { resultDiv.style.display = 'none'; hintDiv.style.display = 'block'; return; }
-  const valorCancelado = (flete * 0.98) - cancelar;
+  const valorCancelado = Math.round(flete - (flete * 0.021) - cancelar);
   document.getElementById('sFlete').textContent = '$ ' + fmtE(flete);
   document.getElementById('sValorCancelar').textContent = '$ ' + fmtE(cancelar);
   document.getElementById('sValorCancelado').textContent = '$ ' + fmtE(valorCancelado);
