@@ -404,7 +404,6 @@ h1 {
     <div class="section-title">Porcentaje de anticipo</div>
     <div class="pct-group">
       <button class="pct-btn active" id="btn75" onclick="setPct(75)">75%</button>
-      <button class="pct-btn" id="btn80" onclick="setPct(80)">80%</button>
       <button class="pct-btn" id="btnLipesa" onclick="toggleLipesa()">Lipesa</button>
     </div>
     <div class="pct-custom-row">
@@ -672,9 +671,8 @@ function actualizarPctBadge(modo) {
 function setPct(p) {
   porcentaje = p;
   document.getElementById('btn75').classList.toggle('active', p === 75);
-  document.getElementById('btn80').classList.toggle('active', p === 80);
   document.getElementById('pctCustom').value = '';
-  actualizarPctBadge(p === 75 ? '75' : '80');
+  actualizarPctBadge('75');
   calcular();
 }
 
@@ -687,7 +685,6 @@ function setPctCustom() {
   if (!isNaN(val) && val > 0 && val <= 100) {
     porcentaje = val;
     document.getElementById('btn75').classList.remove('active');
-    document.getElementById('btn80').classList.remove('active');
     actualizarPctBadge('custom');
     calcular();
   }
